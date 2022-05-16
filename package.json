@@ -1,0 +1,22 @@
+{
+  "name": "my-cli",
+  "version": "1.0.0",
+  "description": "构建属于自己的脚手架工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hu-snail/my-cli.git"
+  },
+  "keywords": [
+    "脚手架"
+  ],
+  "author": "hu-snail",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hu-snail/my-cli/issues"
+  },
+  "homepage": "https://github.com/hu-snail/my-cli#readme"
+}
