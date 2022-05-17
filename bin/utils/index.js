@@ -7,6 +7,7 @@
  import path from "path";
  import { execa } from "execa";
  import { fileURLToPath } from "url";
+
  const __dirname = fileURLToPath(import.meta.url);
  
  /**
@@ -74,12 +75,13 @@
   * @param {*} rootPath 根目录
   * @param {*} item 静态文件配置项
   */
- export function copyFile(rootPath, item) {
+ export function copyFile(rootPath, template, item) {
    const fromFileName = path.resolve(
      __dirname,
-     `../../template/${item.staticPath}`
+     `../../templates/${template}/${item}`
    );
-   const toFileName = `${rootPath}/${item.path}`;
+   const toFileName = `${rootPath}/${item}`;
+   console.log('fromFileName:'+ fromFileName + 'toFileName:' + toFileName )
    const rs = fs.createReadStream(fromFileName, {
      autoClose: true,
      encoding: "utf-8",
@@ -125,4 +127,20 @@
  export function getSupportTs(template) {
     return ['vue-ts', 'react-ts'].includes(template)
  }
- 
+
+ let files = []
+ let dirs = []
+ export function getFiles(template, dir) {
+  const templatePath = `./bin/templates/${template}/`
+  const rootFiles = fs.readdirSync(templatePath, 'utf-8')
+  rootFiles.map(item => {
+    const stat = fs.lstatSync(templatePath + item)
+    const isDir = stat.isDirectory()
+    if (isDir) {
+      const itemDir = `${template}/${item}/`.replace(/react\//g, '')
+      dirs.push(itemDir)
+      getFiles(`${template}/${item}`, itemDir)
+    } else files.push((dir ? dir : '') + item)
+  })
+  return {files, dirs}
+}

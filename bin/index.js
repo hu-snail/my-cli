@@ -7,6 +7,14 @@
  import path from "path";
 
  import command from "./commands/index.js";
+ import { createReact } from './build/react.js'
 
  let config = await command();
- console.log(config)
+
+ var currentPath = path.resolve("./");
+
+ createReact(config, getRootPath())
+
+ function getRootPath() {
+    return `${currentPath}/${config.projectName}`;
+}
