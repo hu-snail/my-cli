@@ -4,5 +4,6 @@
  */
 
  import { changeTemplate } from "./template.js";
- export { changeTemplate };
+ import { changeVariant, inputProjectName } from './common.js'
+ export { changeTemplate, changeVariant, inputProjectName };
  

@@ -9,7 +9,7 @@
      "after",
      `
        Run ${chalk.green(
-         "my-project-cli <command> --help"
+         "my-cli <command> --help"
        )} for detailed usage of given command.`
    );
  };

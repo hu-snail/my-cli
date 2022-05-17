@@ -4,22 +4,34 @@
  */
 
  import inquirer from "inquirer";
- import { changeTemplate } from "../../inquirers/options/index.js";
- import {Command} from "commander";
+ import { changeTemplate, changeVariant, inputProjectName } from "../../inquirers/options/index.js";
+ import  {InvalidArgumentError} from "commander";
  import chalk from "chalk";
+import { hasTemplate, getSupportTs } from '../../utils/index.js'
  export default (program, call) => {
    program
      .command("create")
      .argument("<build-method>", "build tools", validatBuildMethod)
-     .argument("<app-name>", "app name", validatAppName)
-     .description("create a new project powered by my-project-cli")
-     .option("-t, --template <value>", "create a new project by template")
+     .argument("[app-name]", "app name", validatAppName)
+     .description("create a new project powered by my-cli")
+     .option("-t, --template <value>", "create a new project by template", validatTemplate)
      .action(async (method, projectName, option) => {
        let item = {};
+        // 判断用户是否输入 projectName 
+        if (!projectName) {
+          item = await inquirer.prompt([inputProjectName(), changeTemplate(), changeVariant()]);
+          // string转为boolean
+          item.supportTs = item.supportTs === 'true' ? true : false
+          return call && call({ method, ...item });
+        }
        // 如果用户没有输入 模板参数，则提供项目类型选择 react/vue
        if (!option.template) {
          item = await getFramework(option);
-       } else item = option;
+         item.supportTs = item.supportTs === 'true' ? true : false
+       } else {
+         item = option;
+         item.supportTs = getSupportTs(item.template)
+       }
        call && call({ method, projectName, ...item });
      });
  };
@@ -30,14 +42,14 @@
   * @returns appName
   */
  function validatBuildMethod(val) {
-   if (val === "vite" || val === "webpack") return val;
+   if (val === "vite") return val;
    else
-     throw new commander.InvalidArgumentError(
+     throw new InvalidArgumentError(
        chalk.red(
          `
-         "<build-method>构建方式，可输入的值为：${chalk.green(
+         "<build-method>构建方式，只支持值为：${chalk.green(
            "vite"
-         )} 或 ${chalk.green("webpack")}!请重新输入`
+         )}!请重新输入`
        )
      );
  }
@@ -50,16 +62,28 @@
  function validatAppName(appName) {
    var reg = /^[a-zA-Z][-_a-zA-Z0-9]/;
    if (!reg.test(appName)) {
-     throw new Command.InvalidOptionArgumentError(
+     throw new InvalidArgumentError(
        chalk.red(`
        <app-name>项目名称必须以字母开头且长度大于2，请重新输入！`)
      );
    }
    return appName;
  }
+
+  /**
+  * @description 校验模板
+  * @param {String} template 模板名称
+  * @returns template
+  */
+ function validatTemplate(template) {
+   if (hasTemplate(template)) return template
+   else {
+    console.log(chalk.white(`error: option '-t, --template <value>' argument '${template}' is invalid`))
+   }
+ }
  
  async function getFramework() {
-   let answer = await inquirer.prompt([changeTemplate()]);
+   let answer = await inquirer.prompt([changeTemplate(), changeVariant()]);
    return answer;
  }
  
