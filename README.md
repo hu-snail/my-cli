@@ -16,7 +16,7 @@ yarn start
 ```shell
 yarn start create vite app-test --template react
 # or npm
-npm run start create vite app-test--template react
+npm run start create vite app-test --template react
 ```
 效果图：
 
