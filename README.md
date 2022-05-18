@@ -60,7 +60,7 @@ npm run start create vite 1my-test-project --template react
 
 效果图：
 
-![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e99c8830e32a411d823af336fa99c9a2~tplv-k3u1fbpfcp-watermark.image?)
+![image.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e99c8830e32a411d823af336fa99c9a2~tplv-k3u1fbpfcp-watermark.image)
 - 项目名称不输入
 
 ```shell
