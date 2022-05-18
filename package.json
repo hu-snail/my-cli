@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./bin/index.js"
+    "start": "rm -rf ./app-test & node ./bin/index.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "ejs": "^3.1.8",
     "execa": "^6.1.0",
     "inquirer": "^8.2.4",
+    "mkdir": "^0.0.2",
     "mkdirp": "^1.0.4"
   }
 }

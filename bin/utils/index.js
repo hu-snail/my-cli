@@ -13,15 +13,16 @@
  /**
   * @description 解析ejs模板
   * @param {Object} config
+  * @param {String} templateName
   * @param {String} templatePath
   * @returns code
   */
- export function getCode(config, templatePath) {
+ export function getCode(config, templateName, templatePath) {
    const template = fs.readFileSync(
-     path.resolve(__dirname, `../../template/${templatePath}.ejs`)
+     path.resolve(__dirname, `../../templates/${templateName}/${templatePath}`)
    );
    const code = ejs.render(template.toString(), {
-     ...config.middleware,
+     ...config,
    });
    return code;
  }
@@ -73,7 +74,7 @@
  /**
   * @description 复制文件，比如图片/图标静态资源
   * @param {*} rootPath 根目录
-  * @param {*} item 静态文件配置项
+  * @param {*} item 静态模板文件
   */
  export function copyFile(rootPath, template, item) {
    const fromFileName = path.resolve(
