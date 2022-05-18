@@ -74,6 +74,7 @@
  /**
   * @description 复制文件，比如图片/图标静态资源
   * @param {*} rootPath 根目录
+  * @param {*} template 模板
   * @param {*} item 静态模板文件
   */
  export function copyFile(rootPath, template, item) {
@@ -82,7 +83,6 @@
      `../../templates/${template}/${item}`
    );
    const toFileName = `${rootPath}/${item}`;
-   console.log('fromFileName:'+ fromFileName + 'toFileName:' + toFileName )
    const rs = fs.createReadStream(fromFileName, {
      autoClose: true,
      encoding: "utf-8",

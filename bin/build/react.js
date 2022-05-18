@@ -45,6 +45,13 @@ export const createReact = (config, rootPath) => {
        }
     }
    })
-    return ''
+   console.log(`
+   Done. Now run:
+
+   cd ${config.projectName}
+   yarn
+   yarn dev
+
+   `)
 }
 
